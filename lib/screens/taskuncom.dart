@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:golddigger/screens/gpsscreen.dart';
 import '../services/database_service.dart';
 import 'camerascreen.dart';
+import 'dart:io';
 
 class TaskDetailsScreen extends StatefulWidget {
   final int userId; // ID of the user
@@ -21,6 +22,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   bool taskCompleted = false; // Task completion status
   bool decidedNoPhoto = false; // Whether the user decided not to upload a photo
   bool decisionPending = true; // Whether the user's decision is pending
+
+  String? photoUrl; // To store the photo URL
 
   @override
   void initState() {
@@ -54,6 +57,15 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         WHERE gt.task_id = ?
       ''', [widget.taskId]);
 
+      // Fetch the photo URL for this task
+      final photoResult = await db.query(
+        'photos',
+        where: 'user_id = ? AND task_id = ?',
+        whereArgs: [widget.userId, widget.taskId],
+        orderBy: 'uploaded_at DESC',
+        limit: 1,
+      );
+
       setState(() {
         taskDetails = taskResult.isNotEmpty ? taskResult.first : null;
         taskCompleted = userTaskResult.isNotEmpty &&
@@ -63,6 +75,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         decisionPending = userTaskResult.isNotEmpty &&
             (userTaskResult.first['photo_decision'] == null);
         relatedGoals = goalsResult; // Store goals that the task contributes to
+        photoUrl = photoResult.isNotEmpty ? photoResult.first['url'] as String : null;
         isLoading = false;
       });
     } catch (e) {
@@ -74,59 +87,70 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   }
 
   Future<void> _completeTask() async {
-  // Navigate to the GPS screen with taskId and userId
-  final locationVerified = await Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => GPSScreen(
-        userId: widget.userId,
-        taskId: widget.taskId,
-      ),
-    ),
-  );
-
-  if (locationVerified == true) {
-    try {
-      // Update the task as completed
-      final db = await DatabaseService().database;
-      await db.update(
-        'usertasks',
-        {
-          'is_completed': 1,
-          'completed_at': DateTime.now().toIso8601String(),
-        },
-        where: 'user_id = ? AND task_id = ?',
-        whereArgs: [widget.userId, widget.taskId],
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Task completed successfully!')),
-      );
-
-      // Refresh TaskDetailsScreen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TaskDetailsScreen(
-            userId: widget.userId,
-            taskId: widget.taskId,
-          ),
+    // Navigate to the GPS screen with taskId and userId
+    final locationVerified = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => GPSScreen(
+          userId: widget.userId,
+          taskId: widget.taskId,
         ),
-      );
-    } catch (e) {
-      print('Error completing task: $e');
+      ),
+    );
+
+    if (locationVerified == true) {
+      try {
+        // Update the task as completed
+        final db = await DatabaseService().database;
+        await db.update(
+          'usertasks',
+          {
+            'is_completed': 1,
+            'completed_at': DateTime.now().toIso8601String(),
+          },
+          where: 'user_id = ? AND task_id = ?',
+          whereArgs: [widget.userId, widget.taskId],
+        );
+
+        // Update user's gold by adding the task's gold_reward
+        final goldReward = taskDetails!['gold_reward'] as int;
+        await db.rawUpdate(
+          '''
+          UPDATE users
+          SET gold = gold + ?
+          WHERE user_id = ?
+          ''',
+          [goldReward, widget.userId],
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Task completed! You earned $goldReward gold!'),
+          ),
+        );
+
+        // Refresh TaskDetailsScreen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TaskDetailsScreen(
+              userId: widget.userId,
+              taskId: widget.taskId,
+            ),
+          ),
+        );
+      } catch (e) {
+        print('Error completing task: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to complete task: $e')),
+        );
+      }
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to complete task: $e')),
+        SnackBar(content: Text('Location verification failed.')),
       );
     }
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Location verification failed.')),
-    );
   }
-}
-
-
 
   Future<void> _handlePhotoDecision(bool uploadPhoto) async {
     try {
@@ -148,7 +172,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         final capturedImagePath = await Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CameraScreen(userId:widget.userId, taskId: widget.taskId),
+            builder: (context) =>
+                CameraScreen(userId: widget.userId, taskId: widget.taskId),
           ),
         );
 
@@ -312,51 +337,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                         child: const Text('Yes'),
                       ),
                       ElevatedButton(
-                        onPressed: () => _handlePhotoDecision(false),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey,
-                        ),
-                        child: const Text('No'),
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            else if (decidedNoPhoto)
-              Column(
-                children: [
-                  const Text(
-                    'You decided not to upload a photo.',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amber,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Icon(Icons.sentiment_dissatisfied,
-                      size: 80, color: Colors.grey),
-                ],
-              )
-            else
-              Column(
-                children: [
-                  const Text(
-                    'Photo uploaded successfully!',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Icon(Icons.check_circle,
-                      size: 80, color: Colors.green),
-                ],
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+                        onPressed: () => _handlePhotoDecision(false), 
+                        style: ElevatedButton.styleFrom( backgroundColor: Colors.grey, ), 
+                        child: const Text('No'), ), ], ), ], ) 
+              else if (decidedNoPhoto) Column( children: [ const Text( 'You decided not to upload a photo.', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, color: Colors.amber, ), ), const SizedBox(height: 20), const Icon(Icons.sentiment_dissatisfied, size: 80, color: Colors.grey), ], ) else if (photoUrl != null) Column( children: [ const Text( 'Photo uploaded successfully!', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green, ), ), const SizedBox(height: 20), Image.file( File(photoUrl!), fit: BoxFit.cover, height: 200, ), ], ) else const Text( 'Photo information not available.', style: TextStyle(color: Colors.grey), ), ], ), ), ); } }
+
