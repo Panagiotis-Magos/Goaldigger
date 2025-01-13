@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/database_service.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import '../widgets//avatar.dart';
 
 class ProfileScreen extends StatefulWidget {
   final int userId;
@@ -84,11 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // Header Section
             Row(
               children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.grey[700],
-                  child: Icon(Icons.person, size: 40, color: Colors.white),
-                ),
+                AvatarDisplay(size: 80.0),
                 const SizedBox(width: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

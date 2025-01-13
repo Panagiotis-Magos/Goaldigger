@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import '../services/database_service.dart';
+import '../utils/appstate.dart';
 
 class MyStuffScreen extends StatefulWidget {
   final int userId; // ID του χρήστη
@@ -28,18 +29,30 @@ class _MyStuffScreenState extends State<MyStuffScreen> {
 
       // Ανάκτηση των Accessories του χρήστη
       final accessoryResults = await db.rawQuery('''
-        SELECT i.item_id, i.name, i.description, i.type, ui.is_equipped
+        SELECT 
+          i.item_id, 
+          i.name, 
+          i.description, 
+          i.type, 
+          ui.is_equipped, 
+          p.url AS photo_url
         FROM items i
         INNER JOIN useritems ui ON i.item_id = ui.item_id
+        INNER JOIN photos p ON i.photo_id = p.photo_id
         WHERE ui.user_id = ? AND i.type = 1
       ''', [widget.userId]);
-
       // Ανάκτηση όλων των Styles
       final styleResults = await db.rawQuery('''
-        SELECT i.item_id, i.name, i.description, i.type,
-          COALESCE(ui.is_equipped, 0) as is_equipped
+        SELECT 
+          i.item_id, 
+          i.name, 
+          i.description, 
+          i.type, 
+          COALESCE(ui.is_equipped, 0) as is_equipped, 
+          p.url AS photo_url
         FROM items i
         LEFT JOIN useritems ui ON i.item_id = ui.item_id AND ui.user_id = ?
+        LEFT JOIN photos p ON i.photo_id = p.photo_id
         WHERE i.type = 0
       ''', [widget.userId]);
 
@@ -133,7 +146,16 @@ class _MyStuffScreenState extends State<MyStuffScreen> {
             groupValue: item['is_equipped'] == 1,
             onChanged: (value) {
               if (value == true) {
-                _equipItem(item['item_id'] as int, title); // Ενεργοποίηση του αντικειμένου
+                _equipItem(item['item_id'] as int, title);
+                if(item['type']==1){
+                  print("youchanged your accessory");
+                  AppState().accessory=item['photo_url'];
+                  print(AppState().accessory);
+                } else{
+                  print("you changed your theme");
+                  AppState().theme=item['photo_url'];
+                  print(AppState().theme);
+                }// Ενεργοποίηση του αντικειμένου
               }
             },
           ),

@@ -5,6 +5,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart'; // For date formatting
 import 'taskuncom.dart'; // Import για τη σελίδα Task Details
 import 'goalpage.dart'; // Import για τη σελίδα Goal Details
+import '../widgets//avatar.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -247,7 +248,7 @@ List<Map<String, dynamic>> get filterProgressData {
               top: 40, // Adjust vertical placement
               right: 265, // Adjust horizontal placement
               child: IconButton(
-                icon: Icon(Icons.account_circle, color: Colors.amber, size: 50),
+                icon: AvatarDisplay(size: 40.0),
                 onPressed: () {
                   Navigator.pushNamed(context, '/profile'); // Navigate to profile page
                 },
