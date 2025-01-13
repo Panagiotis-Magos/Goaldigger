@@ -191,6 +191,8 @@ VALUES
 (3, 'assets/images/fireglasses.png'),
 (4, 'assets/images/heartglasses.png'),
 (5, 'assets/images/crown.png'),
+(6,'assets/images/bluetheme.png'),
+(7,'assets/images/pinktheme.png'),
 (8, 'assets/images/defaultac.png'),
 (9, 'assets/images/defaultstyle.png');
 
@@ -208,4 +210,4 @@ CREATE TABLE `useritems` (
 --last minute change
 INSERT INTO `useritems` (`user_id`, `item_id`,`is_equipped`)
 VALUES 
-(1,8,1),(1,9,1),(2,8,1),(2,9,1);
+(1,8,1),(1,9,1),(1,6,0),(1,7,0),(2,8,1),(2,9,1),(2,6,0),(2,7,0);
