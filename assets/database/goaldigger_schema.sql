@@ -205,3 +205,7 @@ CREATE TABLE `useritems` (
     FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
     FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`) ON DELETE CASCADE
 );
+--last minute change
+INSERT INTO `useritems` (`user_id`, `item_id`,`is_equipped`)
+VALUES 
+(1,8,1),(1,9,1),(2,8,1),(2,9,1);
