@@ -165,8 +165,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2, // Profile tab is selected
-        selectedItemColor: Colors.amber,
+        currentIndex: 1, // No tab should be selected, yet we have to select one or it crashes
+        selectedItemColor: Colors.grey, //solution - set everything to be the same colour
         unselectedItemColor: Colors.grey,
         onTap: (index) {
           switch (index) {
