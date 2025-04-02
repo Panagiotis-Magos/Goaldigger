@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/database_service.dart';
 import '../utils/appstate.dart';
+import '../widgets/backbutton.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final int userId; // Ο χρήστης που θέλουμε να επεξεργαστούμε
@@ -113,6 +114,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         title: const Text('Edit Profile'),
         backgroundColor: Colors.amber,
         centerTitle: true,
+        automaticallyImplyLeading: false, // Disable default back button
+        leading: CustomBackButton()
       ),
       body: Container(
         color: const Color(0xFF333333),
@@ -122,7 +125,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/mystuff');
+                Navigator.pushNamed(context, '/mystuff');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey[600],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/database_service.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import '../widgets/backbutton.dart';
 
 class ProfileScreen extends StatefulWidget {
   final int userId;
@@ -102,6 +103,8 @@ Future<void> _loadUserData() async {
         title: const Text('Profile'),
         backgroundColor: Colors.amber,
         centerTitle: true,
+        automaticallyImplyLeading: false, // Disable default back button
+        leading: CustomBackButton()
       ),
       body: Container(
         color: const Color(0xFF333333), // Dark gray background

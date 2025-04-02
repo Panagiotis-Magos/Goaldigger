@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import '../services/database_service.dart';
 import '../utils/appstate.dart';
+import '../widgets/backbutton.dart';
 
 class MyStuffScreen extends StatefulWidget {
   final int userId; // ID του χρήστη
@@ -119,6 +120,8 @@ class _MyStuffScreenState extends State<MyStuffScreen> {
       appBar: AppBar(
         title: const Text('My Stuff'),
         backgroundColor: Colors.amber,
+        automaticallyImplyLeading: false, // Disable default back button
+        leading: CustomBackButton()
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),

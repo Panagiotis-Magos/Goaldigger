@@ -131,15 +131,10 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         );
 
         // Refresh TaskDetailsScreen
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TaskDetailsScreen(
-              userId: widget.userId,
-              taskId: widget.taskId,
-            ),
-          ),
-        );
+        setState(() {
+          taskCompleted = true; // Update local state
+          decisionPending = true; // Reset photo decision
+        });
       } catch (e) {
         print('Error completing task: $e');
         ScaffoldMessenger.of(context).showSnackBar(

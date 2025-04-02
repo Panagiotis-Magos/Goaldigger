@@ -251,9 +251,13 @@ List<Map<String, dynamic>> get filterProgressData {
               right: 265, // Adjust horizontal placement
               child: IconButton(
                 icon: AvatarDisplay(size: 40.0),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/profile'); // Navigate to profile page
-                },
+                onPressed: () async {
+                   final shouldRefresh = await Navigator.pushNamed(context, '/profile');
+                    if (shouldRefresh == true && mounted) {
+                      print("should refresh");
+                      setState(() {}); // Trigger home screen refresh
+                    }
+                }, // onPressed
               ),
             ),
           ],

@@ -7,7 +7,7 @@ class CustomBackButton extends StatelessWidget {
 
   const CustomBackButton({
     super.key,
-    this.color = Colors.white, // Default color if none provided
+    this.color = Colors.black, // Default color if none provided
     this.onPressed,
   });
 
