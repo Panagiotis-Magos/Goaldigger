@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/database_service.dart';
+import '../widgets/backbutton.dart';
 
 class GoalDetailsScreen extends StatefulWidget {
   final int userId; // ID του χρήστη
@@ -155,6 +156,8 @@ class _GoalDetailsScreenState extends State<GoalDetailsScreen> {
         title: Text(goalDetails?['title'] ?? 'Goal Details'),
         backgroundColor: Colors.amber,
         centerTitle: true,
+        automaticallyImplyLeading: false, // Disable default back button
+        leading: CustomBackButton()
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

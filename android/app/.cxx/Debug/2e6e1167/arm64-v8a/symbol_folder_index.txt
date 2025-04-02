@@ -1,0 +1,1 @@
+/home/pmagos/Documents/interaction/Goaldigger/build/app/intermediates/cxx/Debug/2e6e1167/obj/arm64-v8a

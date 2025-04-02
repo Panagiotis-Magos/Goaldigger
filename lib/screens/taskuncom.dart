@@ -3,6 +3,7 @@ import 'package:golddigger/screens/gpsscreen.dart';
 import '../services/database_service.dart';
 import 'camerascreen.dart';
 import 'dart:io';
+import '../widgets/backbutton.dart';
 
 class TaskDetailsScreen extends StatefulWidget {
   final int userId; // ID of the user
@@ -211,6 +212,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         title: Text(taskDetails!['title']),
         backgroundColor: Colors.amber,
         centerTitle: true,
+        automaticallyImplyLeading: false, // Disable default back button
+        leading: CustomBackButton( color: Colors.black )
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

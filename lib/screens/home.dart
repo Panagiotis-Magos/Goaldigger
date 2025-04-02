@@ -52,41 +52,43 @@ class _HomeScreenState extends State<HomeScreen> {
         whereArgs: [widget.userId, item['id']],
       );
 
-      if (result.isNotEmpty && result.first['is_completed'] == 0) {
-        // Navigate to TaskDetailsScreen if the task is NOT completed
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TaskDetailsScreen(
-              userId: widget.userId,
-              taskId: item['id'],
-            ),
-          ),
-        );
-      } else {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TaskDetailsScreen(
-              userId: widget.userId,
-              taskId: item['id'],
-            ),
-          ),
-        );
-      }
-    } else if (item['type'] == 'Goal') {
-      // Navigate to GoalDetailsScreen
-      Navigator.push(
+      // Wait for TaskDetailsScreen to return and capture refresh flag
+      final shouldRefresh = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TaskDetailsScreen(
+            userId: widget.userId,
+            taskId: item['id'],
+          ), // TaskDetailsScreen
+        ), // MaterialPageRoute
+      );
+
+      // Refresh UI if task was modified
+      if (shouldRefresh == true && mounted) {
+        print("this page should refresh");
+        _loadTasks();
+        // Optional: Add specific data reloading here if needed
+        // await _loadUserTasks();
+      } // if shouldRefresh
+    } // if Task
+    else if (item['type'] == 'Goal') {
+      // Wait for GoalDetailsScreen to return and capture refresh flag
+      final shouldRefresh = await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => GoalDetailsScreen(
             userId: widget.userId,
             goalId: item['id'],
-          ),
-        ),
+          ), // GoalDetailsScreen
+        ), // MaterialPageRoute
       );
-    }
-  }
+
+      // Refresh UI if goal was modified
+      if (shouldRefresh == true && mounted) {
+        _loadGoals();
+      } // if shouldRefresh
+    } // else if Goal
+  } // _navigateToDetail
 //loading functions
   Future<void> _loadUserData() async {
     try {
