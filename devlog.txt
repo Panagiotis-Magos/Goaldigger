@@ -1,0 +1,25 @@
+Should probably store changes, todo stuff etc here, maybe make a new todo file. Seperate major fixes with lines
+
+
+
+
+----------------------------------------------
+Back button fix 
+
+fixed the back buttons, using a universal back button. The key thing here is not the screen with the back button but the previous screen.
+The app keeps track of screens with a stack. In order to make the previous screen refresh,
+you make it wait for the screen on top of it in the stack, and storing the result in a variable,
+and you then refresh based on that. for example 
+
+                onPressed: () async {
+                   final shouldRefresh = await Navigator.pushNamed(context, '/profile');
+                    if (shouldRefresh == true && mounted) {
+                      print("should refresh");
+                      setState(() {}); // Trigger home screen refresh
+                    }
+                }
+This goes from the home to the profile screen. It pushes the profile screen to stack. It now waits for the Navigator
+to return from there, and what message that sends (by default the back button sends Navigator.pop(context,true))
+Then, if the pop returned true, the page refreshes. Note that from my understanding, you can put more screens on
+the stack and it works properly (using push) but pushReplace with the screen just above does not 
+work for whatever reason (the issue probably is that it waits from the screen right over it).
