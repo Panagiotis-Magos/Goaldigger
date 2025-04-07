@@ -1,0 +1,24 @@
+Stuff that needs to be done in the future
+
+Order is not concrete but vaguely the lower the later
+
+0) Complete Cleanup - Standardisation
+
+0.5) Add important missing features (click on picture to see it - maybe also see task details or goto task page, 
+login with username instead of email, etc).
+
+1) Add and test maps - the whole point of the app
+
+2) Move database to firebase/other form of online storage. Maybe research about viability of local databases?
+
+3) Add social media/friend functionality - Likely to need a lot of work and research. Maybe drop.
+
+4) Asset rework. Create assets for a unique style, explore different styles, maybe add light theme. 
+Can be done concurently with other work. Might be an oportunity for another round of reworks and cleanups.
+
+5) Adding content, can be done concurently with 4. Actually add functional tasks that make sense, and store
+assets that are not random possibly copyrighted google image photos. Relatively easy on the brain side but mindnumbing.
+
+After above are done we can probably say we are at a Alpha (or even Beta) level. Can be published for cv 
+or look into further funding.
+

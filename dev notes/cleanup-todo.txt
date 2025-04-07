@@ -1,0 +1,44 @@
+Add here all stuff that we need to do about Cleanup
+
+- Add universal functions to travel between pages. Probably: 
+
+"go_to" will push the new page to the stack and wait for them to return for a refresh like in clicking to task from home
+
+"go_replace" will replace the current item in the stack with the page like in the bottom navigation bar
+
+Maybe add "go_to_task" for tasks and "go_to_goal" for goals etc, for pages that need to be constructed with arguements.
+
+-Cleanup the home page
+
+there are a fuck ton of rogue functions etc in the giant mess that is the home page.
+The whole thing would probably be a LOT cleaner if they were all dumped in a home_utils file or something similar
+
+-Rework home graph
+
+Its still glichy as shit. The outdated info in the database probably does no favours either. Needs a full rework
+
+-Delete redundances
+
+There is a fuck ton of legacy stuff in this thing the old
+triggers file, probably a few screens here and there, etc. They should be deleted but I am scared
+and it probably needs a check by Irenekap. Also figure out what "profileitem" is, etc
+
+Add here stuff to be deleted ?:
+
+-utils/database_helper
+-services/triggers.dart
+
+Add here stuff that I dont know what they do:
+-profileitem.dart
+
+
+-Make the bottom bar universal
+
+The whole point of a navigation bottom bar is to be universal, in instagram its active even when watching reels
+
+-Standardise objects to be app-wide 
+
+for example the bottom bar can be a single elemnt that is inserted instead of having to define it every time.
+Can probably also do this with the avatar etc.
+
+
