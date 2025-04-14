@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/database_service.dart';
 import '../utils/appstate.dart';
+import '../utils/navigation.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -70,7 +71,7 @@ class LoginScreen extends StatelessWidget {
         content: Text(message),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => goBack(context),
             child: Text('OK'),
           ),
         ],
@@ -156,7 +157,7 @@ class LoginScreen extends StatelessWidget {
                           print(AppState().theme);
                         }
                       }
-                      Navigator.pushReplacementNamed(context, '/home');
+                      gotoNamedReplace(context, '/home');
                     } else {
                       _showErrorDialog(context, 'Invalid email or password.');
                     }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import '../services/database_service.dart';
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
+//import 'package:path_provider/path_provider.dart';
 import '../widgets/backbutton.dart';
+import'../utils/navigation.dart';
+
+//IS THIS EVEN USED???
 
 class ProfileScreen extends StatefulWidget {
   final int userId;
@@ -179,7 +182,7 @@ Future<void> _loadUserData() async {
             // Edit Profile Button
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/editprofile');
+                gotoNamed(context, '/editprofile',() => setState(() {}));
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey[600],

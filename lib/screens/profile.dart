@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:golddigger/utils/navigation.dart';
 import '../services/database_service.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import '../widgets//avatar.dart';
 import '../widgets/backbutton.dart';
+
+//IS THIS USED???
 
 class ProfileScreen extends StatefulWidget {
   final int userId;
@@ -65,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  void _navigateTo(String route) {
+  void _navigateTo(String route) {//this will be removed
     Navigator.pushReplacementNamed(context, route);
   }
 
@@ -118,12 +121,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // Edit Profile Button
             ElevatedButton(
               onPressed: () async {
-                 final shouldRefresh = await Navigator.pushNamed(context, '/editprofile');
-                  if (shouldRefresh == true && mounted) {
-                    print("should refresh");
-                    setState(() {});
-                  }
-                }, // onPressed
+                gotoNamed(context, '/editprofile',() => setState(() {}));
+              }, // onPressed
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey[600],
                 padding: const EdgeInsets.symmetric(vertical: 15),

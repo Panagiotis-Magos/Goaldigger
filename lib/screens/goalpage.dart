@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/database_service.dart';
 import '../widgets/backbutton.dart';
+//import '../utils/navigation.dart';
 
 class GoalDetailsScreen extends StatefulWidget {
   final int userId; // ID του χρήστη

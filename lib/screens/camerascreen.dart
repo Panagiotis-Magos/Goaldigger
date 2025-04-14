@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../services/database_service.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import '../utils/navigation.dart';
 
 class CameraScreen extends StatefulWidget {
   final int userId;
@@ -80,7 +81,7 @@ class _CameraScreenState extends State<CameraScreen> {
       );
 
       print('Photo saved to database: $savedPath');
-      Navigator.pop(context, savedPath); // Return to the previous screen with the photo path
+      goBack<String>(context,savedPath); // Return to the previous screen with the photo path
     } catch (e) {
       print('Error saving photo to database: $e');
     }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:golddigger/screens/gpsscreen.dart';
 import '../services/database_service.dart';
-import 'camerascreen.dart';
+//import 'camerascreen.dart';
 import 'dart:io';
 import '../widgets/backbutton.dart';
+import '../utils/navigation.dart';
 
 class TaskDetailsScreen extends StatefulWidget {
   final int userId; // ID of the user
@@ -165,19 +166,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
       });
 
       if (uploadPhoto) {
-        final capturedImagePath = await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                CameraScreen(userId: widget.userId, taskId: widget.taskId),
-          ),
-        );
-
-        if (capturedImagePath != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Photo captured: $capturedImagePath')),
-          );
-        }
+        gotoUnnamed(context, PageType.camera, widget.userId, widget.taskId,() => setState((){}));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('You decided not to upload a photo.')),
@@ -339,4 +328,5 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                         style: ElevatedButton.styleFrom( backgroundColor: Colors.grey, ), 
                         child: const Text('No'), ), ], ), ], ) 
               else if (decidedNoPhoto) Column( children: [ const Text( 'You decided not to upload a photo.', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, color: Colors.amber, ), ), const SizedBox(height: 20), const Icon(Icons.sentiment_dissatisfied, size: 80, color: Colors.grey), ], ) else if (photoUrl != null) Column( children: [ const Text( 'Photo uploaded successfully!', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green, ), ), const SizedBox(height: 20), Image.file( File(photoUrl!), fit: BoxFit.cover, height: 200, ), ], ) else const Text( 'Photo information not available.', style: TextStyle(color: Colors.grey), ), ], ), ), ); } }
+              //photourl!=NULL should probably instead be something related to the state, such that a refresh shows me the photo
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../services/database_service.dart';
-import '../utils/appstate.dart';
+//import '../utils/appstate.dart';
 import '../widgets/backbutton.dart';
+import '../utils/navigation.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final int userId; // Ο χρήστης που θέλουμε να επεξεργαστούμε
@@ -99,13 +100,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
-  void _logout() {
-    Navigator.pushReplacementNamed(context, '/login');
-  }
 
-  void _navigateTo(String route) {
-    Navigator.pushReplacementNamed(context, route);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +120,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/mystuff');
+                gotoNamed(context, '/mystuff');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey[600],
@@ -202,7 +197,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             const Spacer(),
             ElevatedButton(
-              onPressed: _logout,
+              onPressed: () => gotoNamed(context,'/login'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey[600],
                 padding: const EdgeInsets.symmetric(vertical: 15),

@@ -1,5 +1,6 @@
 //create a custom back button to force a refresh
 import 'package:flutter/material.dart';
+import '../utils/navigation.dart';
 
 class CustomBackButton extends StatelessWidget {
   final Color color; // Dynamic color parameter
@@ -15,7 +16,7 @@ class CustomBackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.arrow_back, color: color), // Use the provided color
-      onPressed: onPressed ?? () => Navigator.pop(context, true),
+      onPressed: onPressed ?? () => goBack<bool>(context,true),
     );
   }
 }

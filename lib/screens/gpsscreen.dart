@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import '../utils/navigation.dart';
 
 class GPSScreen extends StatefulWidget {
   final int userId;
@@ -125,7 +126,7 @@ class _GPSScreenState extends State<GPSScreen> {
                             ),
                           );
                           // Pass true back to the previous screen to indicate success
-                          Navigator.pop(context, true);
+                          goBack<bool>(context,true);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.amber,

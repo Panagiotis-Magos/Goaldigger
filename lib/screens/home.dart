@@ -6,6 +6,7 @@ import 'package:intl/intl.dart'; // For date formatting
 import 'taskuncom.dart'; // Import για τη σελίδα Task Details
 import 'goalpage.dart'; // Import για τη σελίδα Goal Details
 import '../widgets//avatar.dart';
+import '../utils/navigation.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -42,52 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
      _loadProgress();
   }
 
-  //navigating function
+  //navigating function - might be removed entierly
   void _navigateToDetail(Map<String, dynamic> item) async {
     if (item['type'] == 'Task') {
-      final db = await DatabaseService().database;
-      final result = await db.query(
-        'usertasks',
-        where: 'user_id = ? AND task_id = ?',
-        whereArgs: [widget.userId, item['id']],
-      );
-
-      // Wait for TaskDetailsScreen to return and capture refresh flag
-      final shouldRefresh = await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TaskDetailsScreen(
-            userId: widget.userId,
-            taskId: item['id'],
-          ), // TaskDetailsScreen
-        ), // MaterialPageRoute
-      );
-
-      // Refresh UI if task was modified
-      if (shouldRefresh == true && mounted) {
-        print("this page should refresh");
-        _loadTasks();
-        // Optional: Add specific data reloading here if needed
-        // await _loadUserTasks();
-      } // if shouldRefresh
+      gotoUnnamed(context,PageType.task,widget.userId,item['id'],_loadTasks);
+      
     } // if Task
     else if (item['type'] == 'Goal') {
-      // Wait for GoalDetailsScreen to return and capture refresh flag
-      final shouldRefresh = await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => GoalDetailsScreen(
-            userId: widget.userId,
-            goalId: item['id'],
-          ), // GoalDetailsScreen
-        ), // MaterialPageRoute
-      );
-
-      // Refresh UI if goal was modified
-      if (shouldRefresh == true && mounted) {
-        _loadGoals();
-      } // if shouldRefresh
-    } // else if Goal
+      gotoUnnamed(context,PageType.goal,widget.userId,item['id'],_loadGoals);
+    }//if goal
   } // _navigateToDetail
 //loading functions
   Future<void> _loadUserData() async {
@@ -252,11 +216,7 @@ List<Map<String, dynamic>> get filterProgressData {
               child: IconButton(
                 icon: AvatarDisplay(size: 40.0),
                 onPressed: () async {
-                   final shouldRefresh = await Navigator.pushNamed(context, '/profile');
-                    if (shouldRefresh == true && mounted) {
-                      print("should refresh");
-                      setState(() {}); // Trigger home screen refresh
-                    }
+                  gotoNamed(context, '/profile', mounted ? () => setState(() {}) : null);//the function is passed in this state using lambda calculus. Its a way to pass a function with args without it running instantly, I am basically saying "when I call this function, run this function with these args", instead of "return the output of this function with these args"
                 }, // onPressed
               ),
             ),

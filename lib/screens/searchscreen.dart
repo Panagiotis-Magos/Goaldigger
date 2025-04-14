@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/database_service.dart';
 import 'taskuncom.dart'; // Import για τη σελίδα Task Details
 import 'goalpage.dart'; // Import για τη σελίδα Goal Details
+import '../utils/navigation.dart';
 
 class SearchScreen extends StatefulWidget {
   final int userId;

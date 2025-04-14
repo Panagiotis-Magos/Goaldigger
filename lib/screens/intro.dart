@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/navigation.dart'; 
 
 class IntroScreen extends StatelessWidget {
   @override
@@ -53,7 +54,7 @@ class IntroScreen extends StatelessWidget {
             // Get Started Button
             ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/login'); // Navigate to Login Screen
+                gotoNamedReplace(context, '/login'); // Navigate to Login Screen
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black, // Correct property name

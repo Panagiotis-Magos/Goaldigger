@@ -6,7 +6,14 @@ Add here all stuff that we need to do about Cleanup
 
 "go_replace" will replace the current item in the stack with the page like in the bottom navigation bar
 
-Maybe add "go_to_task" for tasks and "go_to_goal" for goals etc, for pages that need to be constructed with arguements.
+Maybe add "go_to_task" for tasks and "go_to_goal", "opencamerafortask" for goals etc, for pages that need to be constructed with arguements.
+
+***ALMOST DONE - LEFT ARE SEARCHSCREEN AND TASKS PAGE TO GPS***
+
+
+-Last lines of taskuncom.dart are a fucking mess
+Camera logic in tasks is a mess in general, needs a full rework
+
 
 -Cleanup the home page
 
@@ -16,6 +23,8 @@ The whole thing would probably be a LOT cleaner if they were all dumped in a hom
 -Rework home graph
 
 Its still glichy as shit. The outdated info in the database probably does no favours either. Needs a full rework
+
+
 
 -Delete redundances
 
@@ -29,7 +38,9 @@ Add here stuff to be deleted ?:
 -services/triggers.dart
 
 Add here stuff that I dont know what they do:
+WHICH OF THE TWO IS USED?
 -profileitem.dart
+-profile.dart
 
 
 -Make the bottom bar universal
@@ -40,5 +51,11 @@ The whole point of a navigation bottom bar is to be universal, in instagram its 
 
 for example the bottom bar can be a single elemnt that is inserted instead of having to define it every time.
 Can probably also do this with the avatar etc.
+
+-Make goals work properly
+make goals autocomplete with task progress or notify the user so that they can click on them to complete them (maybe more dopamine that way?)
+the _addRewardifCompleted function is unused for fucks sake
+goals page should also send you to related tasks and vice versa.
+Since this is new features, could leave cleanup to go further down the roadmap along with for example clicking pictures showing details
 
 
