@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import '../services/database_service.dart';
 import '../utils/appstate.dart';
-import '../widgets/backbutton.dart';
+import '../widgets/navbuttons.dart';
 
 class MyStuffScreen extends StatefulWidget {
   final int userId; // ID του χρήστη

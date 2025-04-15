@@ -7,6 +7,9 @@ Copy and paste lines to keep same length or it annoys me lmao
 Cleanup
 
 15/4/2025
+CustomBottomBar added, replaced old bottom bars, may need to be used in more pages.
+
+15/4/2025
 added /utils/navigation.dart file, which contains wrapper functions for navigation. Ideally code should never interact with the Navigator directly.
 they have the format "gotoX(context,PageType/PageName,[args])". Functions for what to do when returning from a screen are decoupled, but can also be built in if needed as is done with Camerascreen
 

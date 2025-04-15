@@ -1,16 +1,10 @@
 Add here all stuff that we need to do about Cleanup
+Common practice should be:
+elaborate when adding an item to the todo list
+type *<comments on progress>* after working on it
+delete the elaboration and type ***DONE*** once its done
 
 - Add universal functions to travel between pages. ***DONE***
-
-Probably: 
-
-"go_to" will push the new page to the stack and wait for them to return for a refresh like in clicking to task from home
-
-"go_replace" will replace the current item in the stack with the page like in the bottom navigation bar
-
-Maybe add "go_to_task" for tasks and "go_to_goal", "opencamerafortask" for goals etc, for pages that need to be constructed with arguements.
-
-
 
 
 -Last lines of taskuncom.dart are a fucking mess
@@ -45,7 +39,7 @@ WHICH OF THE TWO IS USED?
 -profile.dart
 
 
--Make the bottom bar universal
+-Make the bottom bar universal *universal bottom bar now exists, not implemented in all pages*
 
 The whole point of a navigation bottom bar is to be universal, in instagram its active even when watching reels
 

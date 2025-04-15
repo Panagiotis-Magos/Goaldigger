@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:golddigger/widgets/navbuttons.dart';
 import '../services/database_service.dart';
-import 'taskuncom.dart'; // Import για τη σελίδα Task Details
-import 'goalpage.dart'; // Import για τη σελίδα Goal Details
 import '../utils/navigation.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -183,28 +182,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0, // Search tab is selected
-        selectedItemColor: Colors.amber,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              break;
-            case 1:
-              Navigator.pushReplacementNamed(context, '/home');
-              break;
-            case 2:
-              Navigator.pushReplacementNamed(context, '/shop');
-              break;
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Shop'),
-        ],
-      ),
+      bottomNavigationBar: CustomBottomBar(currentIndex: 0, context: context)
     );
   }
 }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:golddigger/screens/gpsscreen.dart';
 import '../services/database_service.dart';
-//import 'camerascreen.dart';
 import 'dart:io';
-import '../widgets/backbutton.dart';
+import '../widgets/navbuttons.dart';
 import '../utils/navigation.dart';
 
 class TaskDetailsScreen extends StatefulWidget {

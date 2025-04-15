@@ -3,9 +3,8 @@ import '../services/database_service.dart';
 import '../widgets/categoryfilter.dart'; // Import the filter widget
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart'; // For date formatting
-import 'taskuncom.dart'; // Import για τη σελίδα Task Details
-import 'goalpage.dart'; // Import για τη σελίδα Goal Details
 import '../widgets//avatar.dart';
+import '../widgets/navbuttons.dart';
 import '../utils/navigation.dart';
 
 
@@ -241,29 +240,7 @@ List<Map<String, dynamic>> get filterProgressData {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1, // Search tab is selected
-        selectedItemColor: Colors.amber,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.pushReplacementNamed(context, '/searchscreen');
-              break;
-            case 1:
-              Navigator.pushReplacementNamed(context, '/home');
-              break;
-            case 2:
-              Navigator.pushReplacementNamed(context, '/shop');
-              break;
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Shop'),
-        ],
-      ),
+      bottomNavigationBar: CustomBottomBar(currentIndex: 1, context: context),
     );
   }
 

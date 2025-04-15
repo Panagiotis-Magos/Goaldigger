@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/database_service.dart';
+import '../widgets/navbuttons.dart';
 
 class ShopScreen extends StatefulWidget {
   final int userId; // ID του χρήστη
@@ -230,28 +231,7 @@ class _ShopScreenState extends State<ShopScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2, // shop is selected
-        selectedItemColor: Colors.amber,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.pushReplacementNamed(context, '/searchscreen');
-              break;
-            case 1:
-              Navigator.pushReplacementNamed(context, '/home');
-              break;
-            case 2:
-              break;
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Shop'),
-        ],
-      ),
+      bottomNavigationBar: CustomBottomBar(currentIndex: 2, context: context)
     );
   }
 }

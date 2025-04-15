@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:golddigger/utils/navigation.dart';
 import '../services/database_service.dart';
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 import '../widgets//avatar.dart';
-import '../widgets/backbutton.dart';
+import '../widgets/navbuttons.dart';
 
 //IS THIS USED???
 
@@ -66,10 +65,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     } catch (e) {
       print('Error loading user data: $e');
     }
-  }
-
-  void _navigateTo(String route) {//this will be removed
-    Navigator.pushReplacementNamed(context, route);
   }
 
   @override
@@ -170,29 +165,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1, // No tab should be selected, yet we have to select one or it crashes
-        selectedItemColor: Colors.grey, //solution - set everything to be the same colour
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              _navigateTo('/searchscreen');
-              break;
-            case 1:
-              _navigateTo('/home');
-              break;
-            case 2:
-              _navigateTo('/shop');
-              break;
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Shop'),
-        ],
-      ),
+      bottomNavigationBar: CustomBottomBar(currentIndex: 1, context: context, selectedcolor: Colors.grey,)// color is gray so that it appears like nothing is selected
     );
   }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/database_service.dart';
 //import '../utils/appstate.dart';
-import '../widgets/backbutton.dart';
+import '../widgets/navbuttons.dart';
 import '../utils/navigation.dart';
 
 class EditProfileScreen extends StatefulWidget {
