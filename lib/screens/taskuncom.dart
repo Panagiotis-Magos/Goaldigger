@@ -88,66 +88,58 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
     }
   }
 
-  Future<void> _completeTask() async {
-    // Navigate to the GPS screen with taskId and userId
-    final locationVerified = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => GPSScreen(
-          userId: widget.userId,
-          taskId: widget.taskId,
-        ),
-      ),
-    );
 
-    if (locationVerified == true) {
-      try {
-        // Update the task as completed
-        final db = await DatabaseService().database;
-        await db.update(
-          'usertasks',
-          {
-            'is_completed': 1,
-            'completed_at': DateTime.now().toIso8601String(),
-          },
-          where: 'user_id = ? AND task_id = ?',
-          whereArgs: [widget.userId, widget.taskId],
-        );
 
-        // Update user's gold by adding the task's gold_reward
-        final goldReward = taskDetails!['gold_reward'] as int;
-        await db.rawUpdate(
-          '''
-          UPDATE users
-          SET gold = gold + ?
-          WHERE user_id = ?
-          ''',
-          [goldReward, widget.userId],
-        );
+  Future<void> _completeTask() async{
+    try {
+      // Update the task as completed
+      final db = await DatabaseService().database;
+      await db.update(
+        'usertasks',
+        {
+          'is_completed': 1,
+          'completed_at': DateTime.now().toIso8601String(),
+        },
+        where: 'user_id = ? AND task_id = ?',
+        whereArgs: [widget.userId, widget.taskId],
+      );
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Task completed! You earned $goldReward gold!'),
-          ),
-        );
+      // Update user's gold by adding the task's gold_reward
+      final goldReward = taskDetails!['gold_reward'] as int;
+      await db.rawUpdate(
+        '''
+        UPDATE users
+        SET gold = gold + ?
+        WHERE user_id = ?
+        ''',
+        [goldReward, widget.userId],
+      );
 
-        // Refresh TaskDetailsScreen
-        setState(() {
-          taskCompleted = true; // Update local state
-          decisionPending = true; // Reset photo decision
-        });
-      } catch (e) {
-        print('Error completing task: $e');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to complete task: $e')),
-        );
-      }
-    } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Location verification failed.')),
+        SnackBar(
+          content: Text('Task completed! You earned $goldReward gold!'),
+        ),
+      );
+
+      // Refresh TaskDetailsScreen
+      setState(() {
+        taskCompleted = true; // Update local state
+        decisionPending = true; // Reset photo decision
+      });
+    } catch (e) {
+      print('Error completing task: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to complete task: $e')),
       );
     }
   }
+
+  Future<void> _notcompleteTask() async {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Location verification failed.')),
+    );
+  }
+
 
   Future<void> _handlePhotoDecision(bool uploadPhoto) async {
     try {
@@ -284,7 +276,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
             // Action buttons based on task and decision states
             if (!taskCompleted)
               ElevatedButton(
-                onPressed: _completeTask,
+                onPressed: () => gotoUnnamed(context,PageType.gps, widget.userId,widget.taskId,_completeTask,_notcompleteTask),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber,
                   padding: const EdgeInsets.symmetric(vertical: 15),

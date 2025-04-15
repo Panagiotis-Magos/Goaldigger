@@ -76,7 +76,7 @@ class _SearchScreenState extends State<SearchScreen> {
         whereArgs: [widget.userId, item['id']],
       );
       if (result.isEmpty) {
-        // If the task is not in the usertasks table, insert it
+        // If the task is not in the usertasks table, insert it THIS SHOULD CHANGE, AND GIVE YOU THE OPTION TO INSERT FROM THE TASK PAGE
         await db.insert(
           'usertasks',
           {
@@ -86,50 +86,10 @@ class _SearchScreenState extends State<SearchScreen> {
             'completed_at': null,
           },
         );
-
-        // Navigate to the TaskDetailsScreen for incomplete tasks
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TaskDetailsScreen(
-              userId: widget.userId,
-              taskId: item['id'],
-            ),
-          ),
-        );
-      } else if (result.first['is_completed'] == 0) {
-        // Navigate to TaskDetailsScreen if the task is NOT completed
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TaskDetailsScreen(
-              userId: widget.userId,
-              taskId: item['id'],
-            ),
-          ),
-        );
-      } else {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TaskDetailsScreen(
-              userId: widget.userId,
-              taskId: item['id'],
-            ),
-          ),
-        );
-      }
+      } 
+      gotoUnnamed(context, PageType.task, widget.userId, item['id']);
     } else if (item['type'] == 'Goal') {
-      // Navigate to GoalDetailsScreen
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => GoalDetailsScreen(
-            userId: widget.userId,
-            goalId: item['id'],
-          ),
-        ),
-      );
+      gotoUnnamed(context, PageType.goal, widget.userId, item['id']);
     }
   }
 

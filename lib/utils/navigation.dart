@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../screens/taskuncom.dart'; // Import for unnamed pages
 import '../screens/goalpage.dart'; // Import for unnamed pages
 import '../screens/camerascreen.dart'; // Import for unnamed pages
+import '../screens/gpsscreen.dart'; // Import for unnamed pages
+
 
 //unnamed pages are ones where we need to know argeuments before loading (for example taskid)
 //add more above this if needed 
@@ -26,17 +28,20 @@ void gotoNamedReplace(BuildContext context,String name)async{ //This is basicly 
 //Context is always just context
 //Type declares what page you want to go to
 //userid,pageid (other args) determine the page you will go to
+//following two are optional
 //refreshCallback is the function you want to run to refresh the page, usually altering the state (for example loaditems in home) it can be kept empty by default to avoid a refresh
+//no refresh callback happens when the stack pops with false (ie we dont nececerily want a refresh but maybe something else)
 
 //this is a helper enum to make it compile-safe to declare pages types at functions.
 //Add future pages here
 enum PageType {
   task,
   goal,
-  camera
+  camera,
+  gps
 }
 
-void gotoUnnamed(BuildContext context, PageType type, int userid, int pageid, [Function? refreshCallback] ) async {
+void gotoUnnamed(BuildContext context, PageType type, int userid, int pageid, [Function? refreshCallback,Function? norefreshCallback] ) async {
 
   bool shouldRefresh = false;
 
@@ -77,19 +82,35 @@ void gotoUnnamed(BuildContext context, PageType type, int userid, int pageid, [F
       );
       //this may need rework, but for now mimics current camera behaviour. Seems kinda useless
       //I dont like the fact the return function is built in and not custom.
-      if (capturedImagePath != null) {
-        shouldRefresh=true;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Photo captured: $capturedImagePath')),
-        );
-      }
-  } 
+    if (capturedImagePath != null) {
+      shouldRefresh=true;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Photo captured: $capturedImagePath')),
+      );
+    }
+  }
+
+  else if(type == PageType.gps){
+    shouldRefresh = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => GPSScreen(
+          userId: userid,
+          taskId: pageid,
+        ),
+      ),
+    );
+  }
+ 
   
   //add here more pages
 
 
   if (shouldRefresh == true) {
     refreshCallback?.call(); //questionmark doesnt call the function if its null
+  }
+  else{
+    norefreshCallback?.call(); //questionmark doesnt call the function if its null
   }
 
 }
