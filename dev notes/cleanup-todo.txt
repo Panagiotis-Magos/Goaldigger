@@ -1,6 +1,8 @@
 Add here all stuff that we need to do about Cleanup
 
-- Add universal functions to travel between pages. Probably: 
+- Add universal functions to travel between pages. ***DONE***
+
+Probably: 
 
 "go_to" will push the new page to the stack and wait for them to return for a refresh like in clicking to task from home
 
@@ -8,7 +10,7 @@ Add here all stuff that we need to do about Cleanup
 
 Maybe add "go_to_task" for tasks and "go_to_goal", "opencamerafortask" for goals etc, for pages that need to be constructed with arguements.
 
-***ALMOST DONE - LEFT ARE SEARCHSCREEN AND TASKS PAGE TO GPS***
+
 
 
 -Last lines of taskuncom.dart are a fucking mess
