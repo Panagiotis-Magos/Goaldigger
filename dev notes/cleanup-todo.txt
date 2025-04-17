@@ -7,8 +7,10 @@ delete the elaboration and type ***DONE*** once its done
 - Add universal functions to travel between pages. ***DONE***
 
 
--Last lines of taskuncom.dart are a fucking mess
-Camera logic in tasks is a mess in general, needs a full rework
+-Last lines of taskuncom.dart are a fucking mess ***DONE***
+
+
+-Rework tasksuncom.dart image logic - perhaps do later.
 
 
 -Cleanup the home page
@@ -39,7 +41,7 @@ WHICH OF THE TWO IS USED?
 -profile.dart
 
 
--Make the bottom bar universal *universal bottom bar now exists, not implemented in all pages*
+-Make the bottom bar universal ***DONE***
 
 The whole point of a navigation bottom bar is to be universal, in instagram its active even when watching reels
 

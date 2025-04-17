@@ -5,7 +5,7 @@ Order is not concrete but vaguely the lower the later
 0) Complete Cleanup - Standardisation
 
 0.5) Add important missing features (click on picture to see it - maybe also see task details or goto task page, 
-login with username instead of email, goals rework to auto-update progress etc).
+login with username instead of email, goals rework to auto-update progress, item preview before buying etc).
 
 1) Add and test maps - the whole point of the app
 

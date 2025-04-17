@@ -112,6 +112,8 @@ class _ShopScreenState extends State<ShopScreen> {
         title: const Text('Shop'),
         backgroundColor: Colors.amber,
         centerTitle: true,
+        automaticallyImplyLeading: false, // Disable default back button
+        leading: CustomBackButton( color: Colors.black )
       ),
       body: Column(
         children: [

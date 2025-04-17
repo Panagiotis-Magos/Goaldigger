@@ -4,6 +4,9 @@ import 'dart:io';
 import '../widgets/navbuttons.dart';
 import '../utils/navigation.dart';
 
+//WHY CAN THE USER PERMANENTLY DECIDE NOT TO UPLOAD A PHOTO
+//Uploading a photo should not be decided by a bool right away, only checked later.
+
 class TaskDetailsScreen extends StatefulWidget {
   final int userId; // ID of the user
   final int taskId; // ID of the task
@@ -150,13 +153,10 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         whereArgs: [widget.userId, widget.taskId],
       );
 
-      setState(() {
-        decidedNoPhoto = !uploadPhoto;
-        decisionPending = false;
-      });
+
 
       if (uploadPhoto) {
-        gotoUnnamed(context, PageType.camera, widget.userId, widget.taskId,() => setState((){}));
+        gotoUnnamed(context, PageType.camera, widget.userId, widget.taskId,(String x) => setState((){ decidedNoPhoto = !uploadPhoto; decisionPending = false; photoUrl=x; } ) );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('You decided not to upload a photo.')),
@@ -316,7 +316,35 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                       ElevatedButton(
                         onPressed: () => _handlePhotoDecision(false), 
                         style: ElevatedButton.styleFrom( backgroundColor: Colors.grey, ), 
-                        child: const Text('No'), ), ], ), ], ) 
-              else if (decidedNoPhoto) Column( children: [ const Text( 'You decided not to upload a photo.', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, color: Colors.amber, ), ), const SizedBox(height: 20), const Icon(Icons.sentiment_dissatisfied, size: 80, color: Colors.grey), ], ) else if (photoUrl != null) Column( children: [ const Text( 'Photo uploaded successfully!', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green, ), ), const SizedBox(height: 20), Image.file( File(photoUrl!), fit: BoxFit.cover, height: 200, ), ], ) else const Text( 'Photo information not available.', style: TextStyle(color: Colors.grey), ), ], ), ), ); } }
+                        child: const Text('No'), 
+                      ), 
+                    ],
+                  ), 
+                ], 
+              ) 
+              else if (decidedNoPhoto)  
+                Column( 
+                  children: [ 
+                    const Text( 'You decided not to upload a photo.', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, color: Colors.amber, ), ),
+                    const SizedBox(height: 20), const Icon(Icons.sentiment_dissatisfied, size: 80, color: Colors.grey), 
+                  ], 
+                ) 
+              else if (photoUrl != null) 
+                Column( 
+                  children: [ 
+                    const Text( 'Photo uploaded successfully!', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green, ), ),
+                    const SizedBox(height: 20), Image.file( File(photoUrl!), fit: BoxFit.cover, height: 200, ), 
+                  ], 
+                ) 
+              
+              else 
+                const Text( 'Photo information not available.', style: TextStyle(color: Colors.grey), ), 
+        ],        
+       ), 
+      ),
+      bottomNavigationBar: CustomBottomBar(currentIndex: 1, context: context, selectedcolor: Colors.grey,)// color is gray so that it appears like nothing is selected
+    );
+  } 
+}
               //photourl!=NULL should probably instead be something related to the state, such that a refresh shows me the photo
 

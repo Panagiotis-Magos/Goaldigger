@@ -66,3 +66,28 @@ class CustomBottomBar extends StatelessWidget {
     );
   }
 }
+
+class CustomAppBar extends StatelessWidget{
+  final title;
+  final Color backgroundcolor;
+  
+  CustomAppBar({
+    super.key,
+    this.backgroundcolor = Colors.amber, // Default color if none provided
+    this.title = 'SELECT TITLE DUMB DUMB'
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    return  AppBar(
+        title: Text(title),
+        backgroundColor: backgroundcolor,
+        centerTitle: true,
+        automaticallyImplyLeading: false, // Disable default back button
+        leading: CustomBackButton( color: Colors.black )
+      );
+  }
+
+
+}

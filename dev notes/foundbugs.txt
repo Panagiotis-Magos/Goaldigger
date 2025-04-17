@@ -1,3 +1,1 @@
--After going back using the back button from the camera screen to the task screen, I dont get an option to upload a picture again.
-The buttons are replaced by "photo information not available". This persists through refreshes and restarts.
--Even when accepting the photo, the page doesnt refresh so it still doesnt appear at first
+-photo information unavailable bug - fixed!

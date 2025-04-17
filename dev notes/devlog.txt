@@ -6,6 +6,12 @@ Copy and paste lines to keep same length or it annoys me lmao
 ----------------------------------------------
 Cleanup
 
+16/4/2025
+Detalngeled bottom code of tasksundcom.dart, fixed the "Photo information not available" bug
+
+16/4/2025
+added bottom bar to tasks, goals, mystuff
+
 15/4/2025
 CustomBottomBar added, replaced old bottom bars, may need to be used in more pages.
 

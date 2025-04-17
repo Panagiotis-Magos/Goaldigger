@@ -83,7 +83,8 @@ void gotoUnnamed(BuildContext context, PageType type, int userid, int pageid, [F
       //this may need rework, but for now mimics current camera behaviour. Seems kinda useless
       //I dont like the fact the return function is built in and not custom.
     if (capturedImagePath != null) {
-      shouldRefresh=true;
+      //shouldRefresh=true;
+      refreshCallback?.call(capturedImagePath);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Photo captured: $capturedImagePath')),
       );

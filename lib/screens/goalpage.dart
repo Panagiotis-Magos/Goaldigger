@@ -238,6 +238,7 @@ class _GoalDetailsScreenState extends State<GoalDetailsScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: CustomBottomBar(currentIndex: 1, context: context, selectedcolor: Colors.grey,)// color is gray so that it appears like nothing is selected
     );
   }
 }
